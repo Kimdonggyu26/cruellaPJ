@@ -26,8 +26,8 @@ public class MemoServiceImpl implements MemoService {
 	}
 
 	@Override
-	public MemoDto selectMemoByNo(int memoNo) {
-		return memoDao.selectMemoByNo(memoNo);
+	public MemoDto selectMemoByNo(MemoDto memo) {
+		return memoDao.selectMemoByNo(memo);
 	}
 
 	@Override
@@ -36,8 +36,8 @@ public class MemoServiceImpl implements MemoService {
 	}
 
 	@Override
-	public void deleteMemo(int memoNo) {
-		memoDao.deleteMemo(memoNo);
+	public int deleteMemo(MemoDto memo) {
+		return memoDao.deleteMemo(memo);
 	}
 	
 }

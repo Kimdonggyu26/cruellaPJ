@@ -14,13 +14,13 @@ public interface MemoService {
 	int insertMemo(MemoDto memo);
 	
 	// 메모 조회 (메모번호 활용)
-	MemoDto selectMemoByNo(int memoNo);
+	MemoDto selectMemoByNo(MemoDto memo);
 	
 	// 메모 수정
 	int modifyMemo(MemoDto memo);
 	
 	// 메모 삭제
-	void deleteMemo(int memoNo);
+	int deleteMemo(MemoDto memo);
 	
 	
 }

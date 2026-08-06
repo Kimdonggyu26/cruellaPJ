@@ -55,6 +55,7 @@
 				 , memo_modify_date
 		  from memo
 		 where memo_no = #{memoNo}
+		   and mem_no = #{memNo}
 	</select>
 	
 	<!-- 메모 수정 -->
@@ -73,6 +74,7 @@
 		delete
 			from memo
 	   where memo_no = #{memoNo}
+	     and mem_no = #{memNo}
 	</delete>
   
 </mapper>

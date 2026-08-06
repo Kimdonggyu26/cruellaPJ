@@ -47,21 +47,28 @@ public class MemoController {
 	}
 	
 	// 메모 상세조회
-	@PostMapping("/selectMemo.do")
+	@GetMapping("/selectMemo.do")
 	@ResponseBody
-	public MemoDto selectMemo(int memoNo) {
+	public MemoDto selectMemo(int memoNo, HttpSession session) {
 		
-		MemoDto memo = memoService.selectMemoByNo(memoNo); // 메모 고유번호 활용 -> 해당 메모 상세조회
+		MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
 		
-		return memo;
+		MemoDto memo = new MemoDto();
+		memo.setMemNo(loginUser.getMemNo());
+		memo.setMemoNo(memoNo);
+		
+		return memoService.selectMemoByNo(memo);
 	}
 	
 	// 메모 수정(김동규)
 	@PostMapping("/modifyMemo.do")
 	@ResponseBody
-	public int modifyMemo(MemoDto memo) {
+	public int modifyMemo(MemoDto memo, HttpSession session) {
 		
-		MemoDto m = memoService.selectMemoByNo(memo.getMemoNo());
+		MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+		memo.setMemNo(loginUser.getMemNo());
+		
+		MemoDto m = memoService.selectMemoByNo(memo);
 		String before = m.getMemoContent(); 	// 수정 전 메모내용
 		
 		String after = memo.getMemoContent();   // 수정 후 메모내용
@@ -78,11 +85,15 @@ public class MemoController {
 	// 메모삭제(김동규)
 	@PostMapping("/deleteMemo.do")
 	@ResponseBody
-	public String deleteMemo(int memoNo) {
+	public int deleteMemo(int memoNo, HttpSession session) {
 		
-		memoService.deleteMemo(memoNo);
+		MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
 		
-		return "success";
+		MemoDto memo = new MemoDto();
+		memo.setMemoNo(memoNo);
+		memo.setMemNo(loginUser.getMemNo());
+		
+		return memoService.deleteMemo(memo);
 	}
 
 }

@@ -695,7 +695,7 @@
 
     	$.ajax({
     		url: '${contextPath}/memo/selectMemo.do',
-    		type: 'POST',
+    		type: 'GET',
     		data: {memoNo: memoNo},
     		success: function(res){
 
@@ -760,7 +760,6 @@
     // 메모 수정
     function fnModifyMemo(){
     	
-    	let memNo = '${loginUser.getMemNo()}';
     	let memoNo = $('#modifyMemoNo').val();
     	let memoContent = $('#insertMemoInput_edit').val();
 
@@ -768,7 +767,6 @@
     		url: '${contextPath}/memo/modifyMemo.do',
     		type: 'POST',
     		data: {
-    			memNo: memNo,
     			memoNo: memoNo,
     			memoContent: memoContent
     			},

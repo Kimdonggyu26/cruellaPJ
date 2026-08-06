@@ -23,15 +23,15 @@ public class MemoDao {
 		return sqlSession.insert("memoMapper.insertMemo", memo);
 	}
 	
-	public MemoDto selectMemoByNo(int memoNo) {
-		return sqlSession.selectOne("memoMapper.selectMemoByNo", memoNo);
+	public MemoDto selectMemoByNo(MemoDto memo) {
+		return sqlSession.selectOne("memoMapper.selectMemoByNo", memo);
 	}
 	
 	public int modifyMemo(MemoDto memo) {
 		return sqlSession.update("memoMapper.modifyMemo", memo);
 	}
 	
-	public void deleteMemo(int memoNo) {
-		sqlSession.delete("memoMapper.deleteMemo", memoNo);
+	public int deleteMemo(MemoDto memo) {
+		return sqlSession.delete("memoMapper.deleteMemo", memo);
 	}
 }
