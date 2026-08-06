@@ -643,8 +643,8 @@
    		
 	   		$.ajax({
 	   			url : '${contextPath}/memo/memoList.do',
-	   			type: 'POST',
-	   			data: {memNo: memNo},
+	   			type: 'GET',
+	   			// data: {memNo: memNo}, // 서버에서 세션값을 직접 사용 (보안 문제)
 	   			success: function(res) {
 	   			    let liEl = "<ul class='list-unstyled mb-2'>";
 
@@ -670,6 +670,9 @@
 
 	   			    liEl += "</ul>";
 	   			    $('#memoDiv').html(liEl);
+	   			},
+	   			error: function(){
+	   				alert('메모 목록을 불러오지 못했습니다.');
 	   			}
 
 	   	})

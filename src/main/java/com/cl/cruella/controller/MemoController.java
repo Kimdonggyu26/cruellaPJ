@@ -3,13 +3,16 @@ package com.cl.cruella.controller;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cl.cruella.dto.MemberDto;
 import com.cl.cruella.dto.MemoDto;
 import com.cl.cruella.service.MemoService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,13 +25,15 @@ public class MemoController {
 	private final MemoService memoService;
 	
 	// 해당 유저의 메모 전체 조회(김동규)
-	@PostMapping("/memoList.do")
+	@GetMapping("/memoList.do")
 	@ResponseBody
-	public List<MemoDto> memoList(String memNo) {
+	public List<MemoDto> memoList(HttpSession session) {
 		
-		List<MemoDto> list = memoService.selectMemoList(memNo);	// 사번을 활용 -> 모든 메모 정보 조회
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		// List<MemoDto> list = memoService.selectMemoList(memNo);	// 사번을 활용 -> 모든 메모 정보 조회
 		
-		return list;
+		return memoService.selectMemoList(loginUser.getMemNo());
+		// return list;
 	}
 	
 	// 메모 등록(김동규)
