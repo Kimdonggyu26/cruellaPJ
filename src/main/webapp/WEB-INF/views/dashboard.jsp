@@ -833,7 +833,6 @@
 		  			url: '${contextPath}/wl/clockIn.do',
 		  			type: 'POST',
 		  			data: {
-		  				memNo: '${loginUser.getMemNo()}',
 		  				clockInTime: clockInTime
 		  					},
 		  			success: function(res){
@@ -857,7 +856,6 @@
 		  			url: '${contextPath}/wl/clockOut.do',
 		  			type: 'POST',
 		  			data: {
-		  				memNo: '${loginUser.getMemNo()}',
 		  				clockOutTime: clockOutTime
 		  					},
 		  			success: function(res){

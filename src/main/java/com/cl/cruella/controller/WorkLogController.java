@@ -40,6 +40,7 @@ public class WorkLogController {
 	public String clockIn(WorkLogDto workLog, HttpSession session) {
 		
 		MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+		workLog.setMemNo(loginUser.getMemNo());
 	    
 	    int result = wlService.clockIn(workLog); // 출근 정보 등록
 	    
@@ -56,6 +57,7 @@ public class WorkLogController {
 	public String clockOut(WorkLogDto workLog, HttpSession session) {
 		
 		MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+		workLog.setMemNo(loginUser.getMemNo());
 		
 		String clockInTime = wlService.selectClockInTime(workLog.getMemNo()); // 출근 시간 가져오기
 		String clockOutTime = workLog.getClockOutTime();					  // 퇴근 시간 가져오기
