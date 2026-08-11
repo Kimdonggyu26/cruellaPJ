@@ -87,16 +87,17 @@ public class MemberController {
 								 , HttpServletResponse response
 								 , HttpServletRequest request) throws IOException {	
 		
-		MemberDto loginUser = memberService.selectMember(m);
-		List<AlertDto> alert = chatServiceImpl.alertList(loginUser);
+		MemberDto loginUser = memberService.selectMember(m); // 입력값을 통한 실제정보 조회 결과
 		
-		session.setAttribute("alert", alert);
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 		
 		
 		if(loginUser != null && bcryptPwdEncoder.matches(m.getMemPwd(), loginUser.getMemPwd())) {	// 암호화된 비밀번호 일치 조회
 			
+			List<AlertDto> alert = chatServiceImpl.alertList(loginUser);
+			session.setAttribute("alert", alert);
+
 			// Base64 문자열 -> 바이너리 데이터
 			String dataUrl = "data:image/png;base64," + loginUser.getSignPath(); 
 			
@@ -109,7 +110,7 @@ public class MemberController {
 			session.setAttribute("loginUser", loginUser); // 세션에 업데이트된 회원 정보 담기
 			
 			
-			if(loginUser.getStatus().equals("A")) {	// 비밀번호 변경이 필요한 경우
+			if("A".equals(loginUser.getStatus())) {	// 비밀번호 변경이 필요한 경우
 				return "/member/resetPwd";			// 비밀번호 변경 페이지로
 			}
 			
