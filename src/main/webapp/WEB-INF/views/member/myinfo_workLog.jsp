@@ -509,8 +509,9 @@
         	            status: '출근'
         	          },
         	          allDay: false // 시간 기반 이벤트
-        	        },
-        	        {
+                }
+                <c:if test="${not empty list.clockOutTime}">
+                , {
         	          id: '${list.workNo}_out', // 퇴근 이벤트 ID
         	          title: '퇴근 ${list.clockOutTime.substring(0, 5)}', // 퇴근 시간 표시
         	          start: '${list.workDate}T${list.clockOutTime}', // 퇴근 시간
@@ -522,6 +523,7 @@
         	          },
         	          allDay: false // 시간 기반 이벤트
         	        }
+                </c:if>
         	      </c:otherwise>
         	    </c:choose>
         	    <c:if test="${!status.last}">,</c:if>
