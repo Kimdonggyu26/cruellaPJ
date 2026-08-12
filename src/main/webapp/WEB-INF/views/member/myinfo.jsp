@@ -432,7 +432,6 @@
 			 
 				const signPath = canvas.toDataURL();	// 캔버스의 내용 -> 데이터URL(이미지데이터를 Base64로 인코딩한 문자)로 변환
 				
-				$('#sign_image').attr('src', signPath);
 			  
 			  
 			  $.ajax({
@@ -446,7 +445,7 @@
 			  		if(res == 'YYY'){
 				   		alert('전자서명이 등록되었습니다.');
 				
-				   		window.reload(); // 수정 했을 경우 수정된 서명이 보이도록
+						$('#sign_image').attr('src', signPath);
 			   		
 			  		}else{
 			   			alert('전자서명 등록에 실패했습니다. 다시 시도해주세요.');
