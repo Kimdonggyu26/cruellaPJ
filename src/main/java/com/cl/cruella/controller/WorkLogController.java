@@ -1,5 +1,8 @@
 package com.cl.cruella.controller;
 
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +33,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/wl")
 public class WorkLogController {
 	
+	private static final ZoneId SEOUL_ZONE = ZoneId.of("Asia/Seoul");
+	private static final DateTimeFormatter TIME_FORMATTER =
+			DateTimeFormatter.ofPattern("HH:mm:ss");
 	private final WorkLogService wlService;
 	private final MemberService memberService;
 
@@ -41,6 +47,7 @@ public class WorkLogController {
 		
 		MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
 		workLog.setMemNo(loginUser.getMemNo());
+		workLog.setClockInTime(currentTime());
 	    
 	    int result = wlService.clockIn(workLog); // 출근 정보 등록
 	    
@@ -58,6 +65,7 @@ public class WorkLogController {
 		
 		MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
 		workLog.setMemNo(loginUser.getMemNo());
+		workLog.setClockOutTime(currentTime());
 		
 		String clockInTime = wlService.selectClockInTime(workLog.getMemNo()); // 출근 시간 가져오기
 		String clockOutTime = workLog.getClockOutTime();					  // 퇴근 시간 가져오기
@@ -93,6 +101,9 @@ public class WorkLogController {
 		
 	}
 	
+	private String currentTime() {
+		return LocalTime.now(SEOUL_ZONE).format(TIME_FORMATTER);
+	}
 	// 근태기록조회(김동규)
 	@PostMapping("/loadWorkLog.do")
 	@ResponseBody

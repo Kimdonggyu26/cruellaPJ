@@ -825,16 +825,9 @@
 		  	function fnClockIn(){
 		  			
 		  		
-		  		const today = new Date();
-		  		const clockInTime = today.toLocaleTimeString('en-GB', { hour12: false });
-		  		
-		  		
 		  		$.ajax({
 		  			url: '${contextPath}/wl/clockIn.do',
 		  			type: 'POST',
-		  			data: {
-		  				clockInTime: clockInTime
-		  					},
 		  			success: function(res){
 		  				alert(res + ' 출근 등록이 완료되었습니다.');
 		  				
@@ -848,16 +841,9 @@
 		  	function fnClockOut(){
 		  			
 		  		
-		  		const today = new Date();
-		  		const clockOutTime = today.toLocaleTimeString('en-GB', { hour12: false });
-		  		
-		  		
 		  		$.ajax({
 		  			url: '${contextPath}/wl/clockOut.do',
 		  			type: 'POST',
-		  			data: {
-		  				clockOutTime: clockOutTime
-		  					},
 		  			success: function(res){
 		  				alert(res + '퇴근 등록이 완료되었습니다.');
 		  				
