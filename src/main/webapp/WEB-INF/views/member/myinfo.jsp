@@ -428,7 +428,6 @@
 	    // 저장버튼 클릭시
 			$('#sign_save_btn').on('click',function(){
 			 
-				const memNo = '${loginUser.getMemNo()}';
 				const signPath = canvas.toDataURL();	// 캔버스의 내용 -> 데이터URL(이미지데이터를 Base64로 인코딩한 문자)로 변환
 				
 				$('#sign_image').attr('src', signPath);
@@ -438,8 +437,7 @@
 			  	url: '${contextPath}/member/saveSign.do',
 			  	type: 'POST',
 			  	data: {
-			  		signPath: signPath,
-			  		memNo: memNo
+					signPath: signPath
 			  		},
 			  	success: function(res){
 			  		

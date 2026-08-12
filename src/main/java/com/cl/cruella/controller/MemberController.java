@@ -239,6 +239,8 @@ public class MemberController {
 	 @ResponseBody
 	 public String saveSign(MemberDto m, HttpSession session) {
 		 
+		 MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+		 m.setMemNo(loginUser.getMemNo());
 		 // Base64 인코딩
 		 String base64Data = m.getSignPath().split(",")[1];
 		 m.setSignPath(base64Data);
@@ -248,7 +250,6 @@ public class MemberController {
 		 if(result > 0) { // 저장 성공시
 			 
 	         // 세션내의 유저정보(저장 혹은 변경된 전자서명) 업데이트
-	         MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
 	         loginUser.setSignPath("data:image/png;base64," + base64Data); // 원본 데이터로 디코딩
 	         session.setAttribute("loginUser", loginUser);
 		 
