@@ -567,7 +567,8 @@ $(document).ready(function(){
  // 전자서명 
 	  $('.signbtn_div').on('click', function(){
 	        
-	        const sign = '${loginUser.signPath}';
+	        const signData = '${loginUser.signPath}';
+	        const sign = signData ? 'data:image/png;base64,' + signData : '';
 	       
 	        
 	        if(sign == '' || sign == null){
@@ -607,7 +608,8 @@ $(document).ready(function(){
  $('#last_sign_success').on('click',function(){ // 결재 버튼
 	 
 	
-	 const imgSrc = '${loginUser.signPath}';
+	 const signData = '${loginUser.signPath}';
+	 const imgSrc = signData ? 'data:image/png;base64,' + signData : '';
 	 
 
 	 if (count == 0){ 

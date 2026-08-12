@@ -98,14 +98,10 @@ public class MemberController {
 			List<AlertDto> alert = chatServiceImpl.alertList(loginUser);
 			session.setAttribute("alert", alert);
 
-			// Base64 문자열 -> 바이너리 데이터
-			String dataUrl = "data:image/png;base64," + loginUser.getSignPath(); 
-			
 			// 주민번호 뒷자리 '*'처리
 			String maskedSSN = loginUser.getMemSSN();
 			maskedSSN = maskedSSN.substring(0, maskedSSN.length() - 6) + "******"; 
 			
-			loginUser.setSignPath(dataUrl); // 전자서명 세션에 업데이트
 			loginUser.setMemSSN(maskedSSN); // 주민번호 '*'처리 후 전달
 			session.setAttribute("loginUser", loginUser); // 세션에 업데이트된 회원 정보 담기
 			
@@ -250,7 +246,7 @@ public class MemberController {
 		 if(result > 0) { // 저장 성공시
 			 
 	         // 세션내의 유저정보(저장 혹은 변경된 전자서명) 업데이트
-	         loginUser.setSignPath("data:image/png;base64," + base64Data); // 원본 데이터로 디코딩
+	         loginUser.setSignPath(base64Data); // 세션에도 Base64 본문만 저장
 	         session.setAttribute("loginUser", loginUser);
 		 
 			 return "YYY";

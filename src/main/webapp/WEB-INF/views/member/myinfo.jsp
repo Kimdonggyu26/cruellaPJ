@@ -383,7 +383,9 @@
 		function fnLoadSign(){
 			
 			const signPath = '${loginUser.getSignPath()}';
-			$('#sign_image').attr('src', signPath);
+			if (signPath) {
+				$('#sign_image').attr('src', 'data:image/png;base64,' + signPath);
+			}
 			
 		}
 	
