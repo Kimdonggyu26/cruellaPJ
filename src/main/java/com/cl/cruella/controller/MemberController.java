@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.security.SecureRandom;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -63,7 +64,13 @@ public class MemberController {
 	private final NoticeService noticeService;
 	private final WorkLogService wlService;
 	private final ChatServiceImpl chatServiceImpl;
-
+	
+	private static final SecureRandom SECURE_RANDOM = new SecureRandom();
+	private static final String TEMP_PASSWORD_CHARACTERS =
+	        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	      + "abcdefghijklmnopqrstuvwxyz"
+	      + "0123456789";
+	private static final int TEMP_PASSWORD_LENGTH = 10;
 	
 	// 대시보드(김동규)
 	@GetMapping("/dashbord.do")
@@ -188,15 +195,7 @@ public class MemberController {
 		 // 2) 임시 비밀번호 생성 -> 해당 비밀번호로 회원정보 update
 			 
 		 	// 임시 비밀번호 생성
-		 		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E' };
-		 		String str = "";
-		 		int idx = 0;
-			 
-		 		for (int i = 0; i < 7; i++) {
-				 idx = (int) (charSet.length * Math.random());
-				 str += charSet[idx];
-		 		}
-		 		
+		 		String str = generateTemporaryPassword();
 		 	// 임시 비밀번호로 변경 (암호화)
 			 memberService.updatePwd(email, bcryptPwdEncoder.encode(str));	
 		     
@@ -220,6 +219,20 @@ public class MemberController {
 		 }
 		 
 	 }
+	 
+	 // SecureRandom을 이용한 임시 비밀번호 생성 메서드
+	 private String generateTemporaryPassword() {
+		    StringBuilder password = new StringBuilder(TEMP_PASSWORD_LENGTH);
+
+		    for (int i = 0; i < TEMP_PASSWORD_LENGTH; i++) {
+		        int index =
+		                SECURE_RANDOM.nextInt(TEMP_PASSWORD_CHARACTERS.length());
+
+		        password.append(TEMP_PASSWORD_CHARACTERS.charAt(index));
+		    }
+
+		    return password.toString();
+		}
 	 
 	 // 이메일 발송 성공 화면(김동규)
 	 @GetMapping("/sentEmail.do")
