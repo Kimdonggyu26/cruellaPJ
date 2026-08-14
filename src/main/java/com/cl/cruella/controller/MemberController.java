@@ -141,13 +141,25 @@ public class MemberController {
 	
 	// 비밀번호변경(김동규)
 	@PostMapping("/resetPwd.do")
-	public String newPwdCheck(String newPwd, String memNo, HttpServletResponse response) throws IOException {
+	public String newPwdCheck(String newPwd, String checkNewPwd, HttpSession session,
+			HttpServletResponse response) throws IOException {
+		MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
 
-		int result = memberService.resetPwd(bcryptPwdEncoder.encode(newPwd), memNo); // 비밀번호 변경 실행 (암호화)
-		
+		if(loginUser == null) {
+			return "redirect:/";
+		}
+
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
-		
+
+		if(newPwd == null || newPwd.isBlank() || checkNewPwd == null || !newPwd.equals(checkNewPwd)) {
+			out.println("<script>alert('새 비밀번호가 일치하지 않습니다. 다시 확인해주세요.'); history.back();</script>");
+			out.close();
+			return null;
+		}
+
+		int result = memberService.resetPwd(bcryptPwdEncoder.encode(newPwd), loginUser.getMemNo()); // 비밀번호 변경 실행 (암호화)
+
 		out.println("<script>");
 		if(result > 0) { // 변경 성공
 			return "/member/pwdResetSuccess";

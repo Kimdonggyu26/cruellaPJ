@@ -77,7 +77,6 @@
                 <span class="fw-medium">새로운 비밀번호로 변경하여 사용하세요.</span>
               </p>
               <form id="formAuthentication" action="${ contextPath }/member/resetPwd.do" method="POST">
-              	<input type="hidden" name="memNo" value="${ loginUser.getMemNo() }">
                 <div class="mb-6 form-password-toggle">
                   <label class="form-label" for="password">변경할 비밀번호</label>
                   <div class="input-group input-group-merge">
