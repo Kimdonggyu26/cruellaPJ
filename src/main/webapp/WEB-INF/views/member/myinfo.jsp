@@ -711,7 +711,6 @@
     // 메모 등록
     function fnInsertMemo(){
 		
-    	let memNo = '${loginUser.getMemNo()}';
     	let memoContent = $('#insertMemoInput').val();
     	
     	// 작성된 내용이 없을경우 등록하지않고 모달창 종료
@@ -726,7 +725,6 @@
     		url: '${contextPath}/memo/insertMemo.do',
     		type: 'POST',
     		data: {
-    			memNo: memNo,
     			memoContent: memoContent
     		},
     		success: function(res){

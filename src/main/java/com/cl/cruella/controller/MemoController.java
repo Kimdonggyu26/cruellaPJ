@@ -39,7 +39,10 @@ public class MemoController {
 	// 메모 등록(김동규)
 	@PostMapping("/insertMemo.do")
 	@ResponseBody
-	public int insertMemo(MemoDto memo) {
+	public int insertMemo(MemoDto memo, HttpSession session) {
+
+		MemberDto loginUser = (MemberDto) session.getAttribute("loginUser");
+		memo.setMemNo(loginUser.getMemNo());
 		
 		int result = memoService.insertMemo(memo);
 		
